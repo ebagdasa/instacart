@@ -89,7 +89,7 @@ def get_proxies(pr):
 
 
 def parse(keys, proxies):
-    count_per_hour = [873, 874]
+    count_per_hour = [990, 990, 990, 990]
     total_count = 0
     neg_count = 0
     pos_count = 0
@@ -109,11 +109,14 @@ def parse(keys, proxies):
             # print('skipping: {0}. no: {1}'.format(item['product_id'], skipped))
             continue
 
-
+        if datetime.datetime.now().minute==0:
+            print('Beginning of new hour. reset count.')
+            count_per_hour = [995, 995, 995, 995]
         if np.sum(count_per_hour)<=2:
             print('waiting for new hour')
+            print(datetime.datetime.now())
             time.sleep((60 - datetime.datetime.now().minute)*60) # wait for new hour
-            count_per_hour = [999,999]
+            count_per_hour = [995,995,995,995]
 
         cur_id = int(np.argmax(count_per_hour))
         key = keys[cur_id]
