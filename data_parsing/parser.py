@@ -112,7 +112,7 @@ def parse(keys, proxies):
         if datetime.datetime.now().minute==0:
             print('Beginning of new hour. reset count.')
             count_per_hour = [995, 995, 995, 995]
-        if np.sum(count_per_hour)<=2:
+        if np.sum(count_per_hour)<=10:
             print('waiting for new hour')
             print(datetime.datetime.now())
             time.sleep((60 - datetime.datetime.now().minute)*60) # wait for new hour
@@ -131,7 +131,7 @@ def parse(keys, proxies):
         if count_per_hour[cur_id] == 0:
             cur_id = int(np.argmax(count_per_hour))
             key = keys[cur_id]
-            proxy = get_proxies([cur_id])
+            proxy = get_proxies(proxies[cur_id])
 
 
         res_parsed = res.get('list', dict()).get('item', [{1: 0}])[0].get('ndbno', False)
